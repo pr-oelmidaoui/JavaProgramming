@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration Maven du projet DentalPro, entièrement alignée sur le JDK 27. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!-- Version du modèle de projet Maven. -->
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- Identité Maven du projet. -->
+  <groupId>ma.dentalPro</groupId>
+  <artifactId>DentalPro</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+  <name>DentalPro</name>
+
+  <properties>
+    <!-- Encodage utilisé pour les sources et les rapports. -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Version Java centrale du projet. -->
+    <java.version>27</java.version>
+
+    <!--
+      source : syntaxe Java autorisée ;
+      target : version du bytecode généré ;
+      release : API standard Java disponible pendant la compilation.
+      Les trois valeurs sont fixées à 27 pour éviter toute ambiguïté dans les IDE et outils Maven.
+    -->
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+
+    <!-- Versions centralisées des outils de construction. -->
+    <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
+    <maven.enforcer.plugin.version>3.6.2</maven.enforcer.plugin.version>
+    <lombok.version>1.18.48</lombok.version>
+  </properties>
+
+  <dependencies>
+    <!--
+      Lombok génère notamment les getters, setters et constructeurs à la compilation.
+      Le scope "provided" empêche son inclusion dans le JAR produit.
+    -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Bibliothèque utilisée uniquement par les tests du projet. -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Compile le code avec javac en ciblant strictement Java 27. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <release>${maven.compiler.release}</release>
+
+          <!-- Lombok doit être déclaré comme processeur d'annotations depuis le JDK 23. -->
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+
+      <!-- Interrompt immédiatement Maven s'il n'est pas exécuté avec un JDK 27. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven.enforcer.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>verifier-jdk-27</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <!-- [27,28) accepte toutes les distributions du JDK 27, mais aucune autre version. -->
+                <requireJavaVersion>
+                  <version>[27,28)</version>
+                  <message>DentalPro doit être construit avec le JDK 27.</message>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
