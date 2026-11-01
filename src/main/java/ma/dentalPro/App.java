@@ -3,7 +3,7 @@ package ma.dentalPro;
 
 import ma.dentalPro.config.ApplicationContext;
 import ma.dentalPro.domain.Patient;
-import ma.dentalPro.ui.controllers.PatientController;
+import ma.dentalPro.ui.controllers.api.PatientController;
 
 public class App {
 

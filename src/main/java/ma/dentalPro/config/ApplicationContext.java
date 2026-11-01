@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Properties;
 import ma.dentalPro.repository.api.PatientRepo;
 import ma.dentalPro.service.api.PatientService;
-import ma.dentalPro.ui.controllers.PatientController;
+import ma.dentalPro.ui.controllers.api.PatientController;
 
 // Factory - Singleton
 
