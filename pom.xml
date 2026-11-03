@@ -36,9 +36,17 @@
     <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
     <maven.enforcer.plugin.version>3.6.2</maven.enforcer.plugin.version>
     <lombok.version>1.18.48</lombok.version>
+    <mysql.connector.version>8.0.33</mysql.connector.version>
   </properties>
 
   <dependencies>
+    <!-- Pilote JDBC officiel permettant la connexion à un serveur MySQL 8. -->
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>${mysql.connector.version}</version>
+    </dependency>
+
     <!--
       Lombok génère notamment les getters, setters et constructeurs à la compilation.
       Le scope "provided" empêche son inclusion dans le JAR produit.

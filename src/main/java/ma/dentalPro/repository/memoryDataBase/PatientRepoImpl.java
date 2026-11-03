@@ -1,4 +1,4 @@
-package ma.dentalPro.repository.jdbcMySql;
+package ma.dentalPro.repository.memoryDataBase;
 
 
 import java.util.List;
